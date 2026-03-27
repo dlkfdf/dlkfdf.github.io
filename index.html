@@ -77,12 +77,7 @@
     background: #fafafa;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease; /* 부드러운 색상 전환 */
-  }
-
-  /* ⭐️ 수정됨: .has-stock에 걸려있던 초록색 배경 제거 */
-  .dose-card.has-stock {
-    background: none; /* JS에서 주는 배경색을 사용하기 위해 비움 */
+    transition: all 0.2s ease;
   }
 
   .dose-card::before {
@@ -115,12 +110,12 @@
   .dose-num.active { color: #1a1a2e; }
   .dose-sub { font-size: 12px; color: #888; margin-top: 3px; }
 
-  .dose-info {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-    margin-top: 4px;
-  }
+ .dose-info {
+   display: flex;
+   align-items: baseline;
+   gap: 4px;
+   margin-top: 4px;
+ }
 
   .dose-bar {
     height: 2px; background: #eee; border-radius: 2px; margin-top: 12px; overflow: hidden;
@@ -131,31 +126,112 @@
     background: var(--dose-color, #ccc);
   }
 
-  /* (이하 CSS 동일하므로 생략 - 기존 스타일 유지) */
-  .notice { margin-top: 14px; background: #fffbf0; border: 1px solid #f0e0b0; border-radius: 10px; padding: 11px 14px; display: flex; gap: 8px; align-items: flex-start; }
+  /* NOTICE */
+  .notice {
+    margin-top: 14px;
+    background: #fffbf0; border: 1px solid #f0e0b0;
+    border-radius: 10px; padding: 11px 14px;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
   .notice p { font-size: 12px; color: #7a6a3a; line-height: 1.6; }
+
+  /* INQUIRY */
   .inq-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
-  .f-label { font-size: 12px; font-weight: 600; color: #666; display: block; margin-bottom: 6px; }
-  .f-input { width: 100%; height: 48px; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 0 14px; font-size: 15px; font-family: inherit; color: #1a1a2e; background: #fafafa; outline: none; margin-bottom: 14px; transition: border-color .2s, box-shadow .2s; }
-  .f-input:focus { border-color: #4a6cf7; box-shadow: 0 0 0 3px rgba(74,108,247,0.1); background: #fff; }
-  .btn-search { width: 100%; height: 50px; background: #4a6cf7; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background .2s, transform .15s; margin-top: 2px; }
+
+  .f-label {
+    font-size: 12px; font-weight: 600; color: #666;
+    display: block; margin-bottom: 6px;
+  }
+  .f-input {
+    width: 100%;
+    height: 48px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 15px; font-family: inherit;
+    color: #1a1a2e;
+    background: #fafafa;
+    outline: none;
+    margin-bottom: 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .f-input:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 3px rgba(74,108,247,0.1);
+    background: #fff;
+  }
+  .f-input::placeholder { color: #bbb; }
+
+  .btn-search {
+    width: 100%; height: 50px;
+    background: #4a6cf7; color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; font-family: inherit;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    margin-top: 2px;
+  }
+  .btn-search:hover  { background: #3658e0; }
+  .btn-search:active { transform: scale(0.99); }
+
   .err-msg { font-size: 12px; color: #e05050; margin: -8px 0 12px 2px; display: none; }
   .err-msg.show { display: block; }
+
+  /* RESULT */
   .result-area { margin-top: 14px; display: none; animation: fadeUp .3s ease; }
   .result-area.show { display: block; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
-  .r-empty { text-align: center; padding: 24px; background: #fff5f5; border: 1.5px solid #ffd5d5; border-radius: 12px; }
-  .r-card { border: 1.5px solid #e8eaf0; border-radius: 12px; overflow: hidden; }
-  .r-head { background: #f8f9ff; padding: 12px 16px; border-bottom: 1px solid #e8eaf0; }
-  .r-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-  .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
-  .pill-ready { background: #edfdf5; color: #22c97a; }
+
+  .r-empty {
+    text-align: center; padding: 24px;
+    background: #fff5f5; border: 1.5px solid #ffd5d5; border-radius: 12px;
+  }
+  .r-empty .ico { font-size: 28px; margin-bottom: 8px; }
+  .r-empty h3 { font-size: 14px; font-weight: 700; color: #e05050; margin-bottom: 4px; }
+  .r-empty p  { font-size: 12px; color: #888; line-height: 1.6; }
+
+  .r-card {
+    border: 1.5px solid #e8eaf0; border-radius: 12px; overflow: hidden;
+  }
+  .r-head {
+    background: #f8f9ff; padding: 12px 16px;
+    border-bottom: 1px solid #e8eaf0;
+  }
+  .r-num  { font-size: 11px; color: #aaa; letter-spacing: 1px; }
+  .r-name { font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .r-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 16px; border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+  }
+  .r-row:last-child { border-bottom: none; }
+  .r-key { color: #888; }
+  .r-val { font-weight: 600; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
+  }
+  .pill-ready   { background: #edfdf5; color: #22c97a; }
   .pill-waiting { background: #fff8ec; color: #e09000; }
-  .loading-cover { position: fixed; inset: 0; background: rgba(242,244,248,.7); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; z-index: 999; }
+
+  /* LOADING */
+  .loading-cover {
+    position: fixed; inset: 0;
+    background: rgba(242,244,248,.7); backdrop-filter: blur(3px);
+    display: none; align-items: center; justify-content: center; z-index: 999;
+  }
   .loading-cover.show { display: flex; }
-  .spinner { width: 36px; height: 36px; border: 3px solid #e0e0e0; border-top-color: #4a6cf7; border-radius: 50%; animation: spin .65s linear infinite; }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #e0e0e0; border-top-color: #4a6cf7;
+    border-radius: 50%; animation: spin .65s linear infinite;
+  }
   @keyframes spin { to{transform:rotate(360deg)} }
-  .footer { text-align: center; font-size: 11px; color: #bbb; line-height: 1.8; padding-top: 8px; }
+
+  .footer {
+    text-align: center; font-size: 11px; color: #bbb;
+    line-height: 1.8; padding-top: 8px;
+  }
 </style>
 </head>
 <body>
@@ -174,7 +250,7 @@
   <div class="card">
     <div class="card-title">
       실시간 대기 현황
-      <span class="live-badge"><span class="live-dot"></span><span id="updateTime">방금 업데이트</span></span>
+      <span class="live-badge"><span class="live-dot"></span><span id="updateTime">연결 중...</span></span>
     </div>
     <div class="dose-grid" id="doseGrid"></div>
     <div class="notice">
@@ -206,10 +282,10 @@
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbw7kXw8T4Ep8GO9k1AF9wvBDnQASLYxFhmxxwqlQGkFCDBhOeTEldN4NUiK1Tu6HHtM/exec';
 
 const DOSES = [
-  { id:'2.5', label:'2.5mg', price:29, color:'#8a8a8a', bg:'#f5f5f5' },
-  { id:'5.0', label:'5.0mg', price:38, color:'#7c5cbf', bg:'#f4f0ff' },
-  { id:'7.5', label:'7.5mg', price:53, color:'#1fa090', bg:'#e8f8f6' },
-  { id:'10',  label:'10mg',  price:53, color:'#d9547a', bg:'#fff0f5' },
+  { id:'2.5', label:'2.5mg', price:29, color:'#8a8a8a', bg:'#f0f0f0' },
+  { id:'5.0', label:'5.0mg', price:38, color:'#7c5cbf', bg:'#f0eafa' },
+  { id:'7.5', label:'7.5mg', price:53, color:'#1fa090', bg:'#e4f5f3' },
+  { id:'10',  label:'10mg',  price:53, color:'#d9547a', bg:'#fceef3' },
 ];
 
 function renderDoseGrid(data) {
@@ -225,50 +301,28 @@ function renderDoseGrid(data) {
     let body = '', bar = '', inlineStyle = '';
 
     if (hasStock) {
-      // ⭐️ 핵심 수정 사항 
-      // 1. 전체 카드 배경: 원래 bg보다 더 연하게 (투명도 40% 적용)
-      // 2. 테두리: 포인트 컬러로 강조
-      inlineStyle = `
-        border: 2px solid ${dose.color}; 
-        background-color: ${dose.bg}66 !important; 
-        box-shadow: 0 4px 12px ${dose.color}20;
-      `;
-      
-      body = `
-        <div class="dose-info">
-          <span class="dose-num active" style="color:${dose.color};">
-            ${d.stock}
-          </span>
-          <span class="dose-sub" style="color:${dose.color}; font-weight:700;">
-            개 수령 가능
-          </span>
-        </div>`;
-        
-      bar = `
-        <div class="dose-bar" style="background: rgba(255,255,255,0.7);">
-          <div class="dose-bar-fill" style="width:100%; background:${dose.color};"></div>
-        </div>`;
+      // 은은한 배경색 적용 (투명도 25% 정도로 낮춤) 및 그림자 제거
+      inlineStyle = `border: 2px solid ${dose.color}; background-color: ${dose.bg}44 !important; box-shadow: none !important;`;
+      body = `<div class="dose-info">
+                <span class="dose-num active" style="color:${dose.color};">${d.stock}</span>
+                <span class="dose-sub" style="color:${dose.color}; font-weight:700;">개 수령 가능</span>
+              </div>`;
+      bar = `<div class="dose-bar" style="background: rgba(255,255,255,0.7);"><div class="dose-bar-fill" style="width:100%; background:${dose.color};"></div></div>`;
     } else {
-      // 대기 중일 때 (기존 회색 유지)
-      inlineStyle = `border: 1.5px solid #eee; background-color: #fafafa;`;
+      inlineStyle = `border: 1.5px solid #eee; background-color: #fafafa; box-shadow: none;`;
       body = `<div class="dose-info"><span class="dose-num ${hasWaiting?'active':''}">${d.waiting}</span><span class="dose-sub">명 대기 중</span></div>`;
       const pct = Math.min(d.waiting * 12, 100);
       bar = `<div class="dose-bar"><div class="dose-bar-fill" style="width:${pct}%; background:${hasWaiting? dose.color : '#ccc'};"></div></div>`;
     }
 
     grid.innerHTML += `
-      <div class="dose-card ${hasStock?'has-stock':''}" 
-           style="--dose-color:${dose.color}; --dose-bg:${dose.bg}; ${inlineStyle}">
-        <div class="dose-top">
-          <span class="dose-badge" style="background:${dose.bg}; color:${dose.color};">${dose.label}</span>
-          <span class="dose-price"><b>${dose.price}</b>만원</span>
-        </div>
+      <div class="dose-card" style="--dose-color:${dose.color}; --dose-bg:${dose.bg}; ${inlineStyle}">
+        <div class="dose-top"><span class="dose-badge" style="background:${dose.bg}; color:${dose.color};">${dose.label}</span><span class="dose-price"><b>${dose.price}</b>만원</span></div>
         ${body}${bar}
       </div>`;
   });
 }
 
-// (fetchStatus, doInquiry, renderResult 함수는 기존과 동일 - 원하시는 기능 모두 포함됨)
 async function fetchStatus() {
   const savedData = localStorage.getItem('pharmacy_status_cache');
   const savedTime = localStorage.getItem('pharmacy_time_cache');
@@ -276,6 +330,7 @@ async function fetchStatus() {
     renderDoseGrid(JSON.parse(savedData));
     if (savedTime) document.getElementById('updateTime').textContent = `${savedTime} 업데이트`;
   }
+
   try {
     const res  = await fetch(GAS_URL + '?action=getStatus', { mode:'cors' });
     const json = await res.json();
@@ -285,59 +340,91 @@ async function fetchStatus() {
       document.getElementById('updateTime').textContent = `${json.updateTime} 업데이트`;
       renderDoseGrid(json.data);
     }
-  } catch(e) { console.log(e); }
+  } catch(e) { console.log('업데이트 실패', e); }
 }
 
 async function doInquiry() {
   const name = document.getElementById('userName').value.trim();
   const rid = document.getElementById('reservationId').value.trim();
   const phone = document.getElementById('phoneDigits').value.trim();
+  const errEl = document.getElementById('errMsg');
+  const area = document.getElementById('resultArea');
+
+  if (errEl) errEl.classList.remove('show');
+  if (area) area.classList.remove('show');
+
   if (!name || !rid || phone.length < 4) {
-    document.getElementById('errMsg').textContent = '정보를 정확히 입력해주세요.';
-    document.getElementById('errMsg').classList.add('show');
+    errEl.textContent = '정보를 모두 정확히 입력해주세요.';
+    errEl.classList.add('show');
     return;
   }
-  document.getElementById('errMsg').classList.remove('show');
+
   document.getElementById('loadingCover').classList.add('show');
+
   try {
     const res = await fetch(`${GAS_URL}?action=getReservation&id=${encodeURIComponent(rid)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}`);
     const json = await res.json();
     renderResult(json, rid);
-  } catch(e) { alert('조회 중 오류 발생'); }
-  finally { document.getElementById('loadingCover').classList.remove('show'); }
+  } catch(e) {
+    errEl.textContent = '조회 중 오류가 발생했습니다.';
+    errEl.classList.add('show');
+  } finally {
+    document.getElementById('loadingCover').classList.remove('show');
+  }
 }
 
 function renderResult(json, rid) {
   const area = document.getElementById('resultArea');
-  if (!json.found) {
-    area.innerHTML = `<div class="r-empty"><h3>예약 내역이 없습니다</h3><p>정보를 다시 확인해주세요.</p></div>`;
+  if (!area) return;
+
+  if (!json || !json.found) {
+    area.innerHTML = `
+      <div class="r-empty">
+        <div class="ico">🔍</div>
+        <h3>예약 내역을 찾을 수 없습니다</h3>
+        <p>예약 정보(예약번호, 이름, 휴대폰 번호)를 다시 확인해주세요.</p>
+      </div>`;
   } else {
     const r = json.reservation;
+    let statusPill = '';
+    let guide = '';
+
     const curStatus = (r.statusText || '').replace(/\s+/g, '');
-    let statusPill = '', guide = '';
+
     if (curStatus === '입고완료') {
       statusPill = `<span class="pill pill-ready">✅ 수령 가능</span>`;
-      guide = '제품이 입고되었습니다. 방문 수령해 주세요.';
+      guide = '예약하신 제품이 입고되었습니다. <br>편하실 때 방문하여 수령해주세요.';
     } else if (curStatus === '출고완료' || curStatus === '수령완료') {
-      statusPill = `<span class="pill" style="background:#eee;color:#666;">📦 수령 완료</span>`;
-      guide = '수령이 완료되었습니다.';
+      statusPill = `<span class="pill" style="background:#f0f0f0; color:#666;">📦 수령 완료</span>`;
+      guide = '제품 수령이 완료되었습니다. <br>문제가 있을 경우 연락바랍니다.';
     } else {
       statusPill = `<span class="pill pill-waiting">⏳ 입고 대기 중</span>`;
-      guide = `현재 앞에 <strong>${r.position}명</strong> 남아있으며, <br>입고 시 순차적으로 연락드리겠습니다.`;
+      const waitAhead = r.position || 0; 
+      guide = `현재 앞에 <strong>${waitAhead}명</strong> 남아있으며, <br>입고 시 순차적으로 연락드리겠습니다.`;
     }
+
     area.innerHTML = `
       <div class="r-card">
-        <div class="r-head"><div class="r-num">No. ${rid}</div><div class="r-name">${r.name}님</div></div>
-        <div class="r-row"><span class="r-key">품목</span><span class="r-val">${r.dose}mg</span></div>
+        <div class="r-head">
+          <div class="r-num">예약번호 ${String(rid).padStart(4,'0')}</div>
+          <div class="r-name">${r.name}님의 예약</div>
+        </div>
+        <div class="r-row"><span class="r-key">용량</span><span class="r-val">${r.dose}mg</span></div>
+        <div class="r-row"><span class="r-key">예약일</span><span class="r-val">${r.date}</span></div>
+        <div class="r-row"><span class="r-key">수량</span><span class="r-val">${r.qty}개</span></div>
         <div class="r-row"><span class="r-key">상태</span><span class="r-val">${statusPill}</span></div>
-        <div class="r-row"><span class="r-key">안내</span><span class="r-val" style="text-align:right;">${guide}</span></div>
+        <div class="r-row"><span class="r-key">안내</span><span class="r-val" style="text-align:right;max-width:60%;font-weight:500;line-height:1.4;">${guide}</span></div>
       </div>`;
   }
   area.classList.add('show');
 }
 
+['userName', 'reservationId', 'phoneDigits'].forEach(id => {
+  document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') doInquiry(); });
+});
+
 fetchStatus();
-setInterval(fetchStatus, 300000);
+setInterval(fetchStatus, 3 * 60 * 1000);
 </script>
 </body>
 </html>

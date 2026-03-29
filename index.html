@@ -7,6 +7,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>새종로약국 예약 시스템</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css">
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -19,7 +21,6 @@
       --sub: #7a8fa8;
       --sub-2: #5c7490;
 
-      /* 브랜드 컬러 */
       --brand-blue: #426CB5;
       --brand-blue-dark: #2f5099;
       --brand-blue-soft: #e8eef9;
@@ -29,31 +30,26 @@
       --brand-yellow-soft: #fdf8e3;
       --brand-yellow-mid: #f5e9b0;
 
-      /* 용량별 고유색 (변경 금지) */
       --purple: #7b61ff;
-  --purple-soft: #f4f1ff;
-  /* 👇 5.0mg (보라) 새로운 무드 */
-  --purple-mid: #d1c4e9;
-  --purple-dark: #4527a0;
+      --purple-soft: #f4f1ff;
+      --purple-mid: #d1c4e9;
+      --purple-dark: #4527a0;
 
-  --teal: #00b8d4;
-  --teal-soft: #e0f7fa;
-  /* 👇 7.5mg (청록) 새로운 무드 */
-  --teal-mid: #b2ebf2;
-  --teal-dark: #00838f;
+      --teal: #00b8d4;
+      --teal-soft: #e0f7fa;
+      --teal-mid: #b2ebf2;
+      --teal-dark: #00838f;
 
-  --pink: #e91e8c;
-  --pink-soft: #fce4f3;
-  /* 👇 10mg (핑크) 새로운 무드 */
-  --pink-mid: #f8bbd0;
-  --pink-dark: #ad1457;
+      --pink: #e91e8c;
+      --pink-soft: #fce4f3;
+      --pink-mid: #f8bbd0;
+      --pink-dark: #ad1457;
 
-  --gray: #8b95a1;
-  --gray-soft: #f2f4f6;
-  --gray-mid: #d1d6db;
-  --gray-dark: #333d4b;
+      --gray: #8b95a1;
+      --gray-soft: #f2f4f6;
+      --gray-mid: #d1d6db;
+      --gray-dark: #333d4b;
 
-      --shadow: 0 2px 4px rgba(66, 108, 181, 0.06), 0 8px 28px rgba(66, 108, 181, 0.08);
       --shadow-card: 0 1px 2px rgba(66,108,181,0.04), 0 6px 20px rgba(66,108,181,0.07);
       --radius-xxl: 28px;
       --radius-xl: 24px;
@@ -64,14 +60,13 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+      /* Pretendard를 1순위로 */
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       background: #eef3fb;
       color: var(--text);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
-
-    /* 상단 헤더 배경 - 아래 .wrap 다음 블록에서 정의 */
 
     .wrap {
       position: relative;
@@ -82,7 +77,6 @@
       padding: 28px 18px 56px;
     }
 
-    /* header-bg는 body 바로 아래, wrap 밖 */
     .header-bg {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -91,7 +85,6 @@
       z-index: 0;
       overflow: hidden;
     }
-
     .header-bg::before {
       content: '';
       position: absolute;
@@ -100,7 +93,6 @@
       border-radius: 50%;
       background: rgba(233,200,75,0.20);
     }
-
     .header-bg::after {
       content: '';
       position: absolute;
@@ -112,7 +104,6 @@
 
     /* ── 브랜드 헤더 ── */
     .brand { padding: 6px 2px 32px; }
-
     .brand-badge {
       display: inline-flex;
       align-items: center;
@@ -127,7 +118,6 @@
       letter-spacing: 0.3px;
       border: 1px solid rgba(255,255,255,0.30);
     }
-
     .brand h1 {
       margin: 0;
       font-size: 30px;
@@ -136,11 +126,7 @@
       letter-spacing: -1.1px;
       color: #ffffff;
     }
-
-    .brand h1 span {
-      color: var(--brand-yellow);
-    }
-
+    .brand h1 span { color: var(--brand-yellow); }
     .brand p {
       margin: 12px 0 0;
       font-size: 14.5px;
@@ -160,15 +146,6 @@
       box-shadow: var(--shadow-card);
     }
 
-    /* ── 실시간 대기 헤더 ── */
-    .section-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
     .section-title {
       margin: 0;
       font-size: 22px;
@@ -176,7 +153,6 @@
       font-weight: 800;
       letter-spacing: -0.7px;
     }
-
     .section-sub {
       margin: 6px 0 0;
       color: var(--sub);
@@ -184,8 +160,6 @@
       line-height: 1.5;
       font-weight: 600;
     }
-
-    .live-chip { display: none; }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -198,22 +172,26 @@
       gap: 14px;
     }
 
+    /* ── dose-card: 대기 없음(기본) vs 대기 있음(active) ── */
     .dose-card {
       background: var(--surface-soft);
-      border: 1.5px solid var(--line);
+      /* 기본: 얇고 연한 테두리 */
+      border: 1px solid var(--line);
       border-radius: 22px;
       padding: 18px 16px 16px;
       min-height: 164px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      transition: border-color .15s ease;
+      /* 그림자 없음 */
+      box-shadow: none;
     }
-
     .dose-card.active {
-      border-color: var(--brand-blue);
-      box-shadow: 0 6px 22px rgba(66, 108, 181, 0.13);
-      background: var(--brand-blue-soft);
+      /* 대기 있을 때: 파란 테두리만, 배경/그림자 변경 없음 */
+      border: 1.5px solid var(--brand-blue);
+      box-shadow: none;
+      background: var(--surface-soft);
     }
 
     .dose-top {
@@ -235,9 +213,9 @@
       font-size: 14px;
       font-weight: 800;
       letter-spacing: -0.2px;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
     }
 
-    /* 용량별 색상: 절대 변경 금지 */
     .p-25  { background: var(--gray-mid);   color: var(--gray-dark);   }
     .p-50  { background: var(--purple-mid); color: var(--purple-dark); }
     .p-75  { background: var(--teal-mid);   color: var(--teal-dark);   }
@@ -249,21 +227,18 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
-
     .wait {
       display: flex;
       align-items: flex-end;
       gap: 6px;
       line-height: 1;
     }
-
     .wait .num {
       font-size: 52px;
       font-weight: 800;
       letter-spacing: -2.3px;
       color: #1B1F27;
     }
-
     .wait .txt {
       font-size: 15px;
       color: #1B1F27;
@@ -278,7 +253,6 @@
       overflow: hidden;
       margin-top: 14px;
     }
-
     .bar > span {
       display: block;
       height: 100%;
@@ -307,7 +281,6 @@
       font-weight: 800;
       letter-spacing: -0.8px;
     }
-
     .pane-sub {
       margin: 0 0 22px;
       color: var(--sub);
@@ -317,7 +290,6 @@
     }
 
     .field { margin-bottom: 16px; }
-
     .field label {
       display: block;
       margin-bottom: 9px;
@@ -327,8 +299,7 @@
       letter-spacing: -0.2px;
     }
 
-    .input,
-    .select {
+    .input {
       width: 100%;
       height: 54px;
       border: 1.5px solid var(--line-strong);
@@ -339,13 +310,11 @@
       font-weight: 700;
       color: var(--text);
       outline: none;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       transition: border-color .15s ease, box-shadow .15s ease;
     }
-
     .input::placeholder { color: #b0bcc8; }
-
-    .input:focus,
-    .select:focus {
+    .input:focus {
       border-color: var(--brand-blue);
       box-shadow: 0 0 0 4px rgba(66, 108, 181, 0.10);
     }
@@ -361,89 +330,124 @@
       font-weight: 800;
       letter-spacing: -0.2px;
       cursor: pointer;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       transition: background .15s ease, transform .05s ease, box-shadow .15s ease;
       box-shadow: 0 4px 14px rgba(66,108,181,0.28);
     }
-
     .btn:hover {
       background: var(--brand-blue-dark);
       box-shadow: 0 6px 20px rgba(66,108,181,0.35);
     }
-
     .btn:active { transform: translateY(1px); }
 
-    /* ── 조회 결과 ── */
-    .lookup-result-wrap { margin-top: 20px; }
+    /* ── 조회 결과 영역 전체 감싸는 회색 박스 ── */
+    .lookup-result-wrap {
+      margin-top: 20px;
+      background: #f2f5f9;
+      border-radius: 20px;
+      padding: 16px;
+      border: 1px solid #e2e8f2;
+    }
 
     .lookup-name-row {
       display: flex;
       align-items: baseline;
       gap: 8px;
-      margin-bottom: 16px;
-      padding: 14px 16px;
+      margin-bottom: 14px;
+      padding: 12px 14px;
       background: var(--brand-blue-soft);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       border: 1px solid var(--brand-blue-mid);
     }
-
     .lookup-name {
       font-size: 20px;
       font-weight: 800;
       letter-spacing: -0.7px;
       color: var(--brand-blue);
     }
-
     .lookup-birth {
       font-size: 14px;
       font-weight: 600;
       color: var(--sub-2);
     }
 
-    .booking-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    /* ── 예약 블록: 1열로 쌓기 ── */
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .booking-block {
-      background: var(--surface-soft);
-      border: 1.5px solid var(--line);
-      border-radius: 20px;
-      padding: 14px;
+      background: #ffffff;
+      border: 1px solid #dce6f5;
+      border-radius: 16px;
+      padding: 14px 16px;
       position: relative;
-      min-height: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      transition: border-color .15s ease;
     }
 
+    /* 상태 뱃지 — 우측 상단 */
     .booking-status-badge {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 5px 10px;
+      top: 14px;
+      right: 14px;
+      padding: 4px 10px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 800;
       white-space: nowrap;
     }
-
     .booking-status-badge.s-waiting { background: #fff0f0; color: #e53935; }
     .booking-status-badge.s-ready   { background: #e8f8f0; color: #1a9c55; }
     .booking-status-badge.s-done    { background: #f2f4f6; color: #8b95a1; }
 
+    /* 용량 크게 */
     .booking-dose {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      padding-right: 80px; /* 뱃지랑 안 겹치게 */
     }
 
-    .booking-qty {
+    /* 예약날짜 + 수량 한 줄 */
+    .booking-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-size: 13px;
       font-weight: 600;
       color: var(--sub-2);
+      margin-bottom: 10px;
+    }
+    .booking-meta-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--sub);
+      flex-shrink: 0;
+    }
+
+    /* 몇번째 순서 표시 — 블록 하단 */
+    .booking-rank {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #edf1f8;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+    .booking-rank-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--brand-blue);
+    }
+    /* 수령완료 or 수령가능이면 순서 표시 다르게 */
+    .booking-rank.done {
+      color: #8b95a1;
     }
 
     .no-result {
@@ -454,7 +458,6 @@
       border: 1px solid var(--brand-blue-mid);
       text-align: center;
     }
-
     .no-result p {
       margin: 0;
       color: var(--sub-2);
@@ -463,16 +466,7 @@
       line-height: 1.7;
     }
 
-    /* ── 구분선 ── */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--brand-blue-mid), transparent);
-      margin: 4px 0 18px;
-    }
-
-    /* ── 옐로우 강조 배너 (미사용 제거) ── */
-
-    /* ── 카드 상단 컬러 헤더 (섹션별) ── */
+    /* ── 카드 상단 컬러 헤더 ── */
     .card-header-blue {
       margin: -24px -20px 22px;
       padding: 18px 22px;
@@ -483,16 +477,8 @@
       justify-content: space-between;
       gap: 12px;
     }
-
-    .card-header-blue .section-title {
-      color: #fff;
-      margin: 0;
-    }
-
-    .card-header-blue .section-sub {
-      color: rgba(255,255,255,0.72);
-      margin: 4px 0 0;
-    }
+    .card-header-blue .section-title { color: #fff; margin: 0; }
+    .card-header-blue .section-sub   { color: rgba(255,255,255,0.72); margin: 4px 0 0; }
 
     .live-chip-white {
       display: inline-flex;
@@ -507,37 +493,26 @@
       white-space: nowrap;
       border: 1px solid rgba(255,255,255,0.28);
     }
-
     .live-chip-white .dot {
-      width: 7px;
-      height: 7px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--brand-yellow);
       animation: pulse 1.8s ease-in-out infinite;
       display: inline-block;
     }
 
-    /* 조회 카드 헤더 */
     .card-header-yellow {
       margin: -24px -20px 22px;
       padding: 18px 22px;
       background: var(--brand-yellow);
       border-radius: 28px 28px 0 0;
     }
-
-    .card-header-yellow .pane-title {
-      color: #3a2800;
-      margin: 0 0 4px;
-    }
-
-    .card-header-yellow .pane-sub {
-      color: rgba(58,40,0,0.65);
-      margin: 0;
-    }
+    .card-header-yellow .pane-title { color: #3a2800; margin: 0 0 4px; }
+    .card-header-yellow .pane-sub   { color: rgba(58,40,0,0.65); margin: 0; }
 
     @media (max-width: 390px) {
       .wrap { padding: 22px 14px 40px; }
-      .grid, .booking-grid { grid-template-columns: 1fr 1fr; }
+      .grid { grid-template-columns: 1fr 1fr; }
       .brand h1 { font-size: 27px; }
       .section-title { font-size: 20px; }
       .pane-title { font-size: 20px; }
@@ -607,11 +582,8 @@
   </div>
 
   <script>
-    // ── 설정 ──────────────────────────────────────────────────────────
-    // 실제 배포 시 GAS 웹 앱 URL로 교체하세요
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwE2NeeP5AdKApzcA_EYThTsS6NGtp6gn4ixwlj3DAJQbsEcEPkKHwgLfZIhbE2XhIF/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyGNbnKgci-cjE2CNpHdR5V9l-FcmTuvUfZJxRXcnzR-4glBpyn2qlOTR8tBQ1BBxYW/exec';
 
-    // ── 상태 ──────────────────────────────────────────────────────────
     let doseData = [
       { dose: '2.5mg', wait: 0, cls: 'p-25' },
       { dose: '5.0mg', wait: 0, cls: 'p-50' },
@@ -621,16 +593,9 @@
 
     const doseGrid = document.getElementById('doseGrid');
 
-    // ── 유틸 ─────────────────────────────────────────────────────────
-    function formatBirth6(b) {
-      if (!b) return '';
-      const s = String(b).replace(/\D/g, '');
-      if (s.length === 6) return `${s.slice(0,2)}.${s.slice(2,4)}.${s.slice(4,6)}`;
-      return s;
-    }
-
+    // ── 유틸 ──────────────────────────────────────────
     function statusClass(status) {
-      if (status === '수령 가능')  return 's-ready';
+      if (status === '수령 가능') return 's-ready';
       if (status === '수령 완료') return 's-done';
       return 's-waiting';
     }
@@ -643,14 +608,14 @@
       return 'var(--text)';
     }
 
-    // ── 대기 현황 렌더 ────────────────────────────────────────────────
+    // ── 대기 현황 렌더 ─────────────────────────────────
     function renderDoseGrid() {
       doseGrid.innerHTML = '';
       const maxWait = Math.max(...doseData.map(x => x.wait), 1);
       doseData.forEach(item => {
         const percent = item.wait === 0 ? 0 : Math.max(8, Math.round((item.wait / maxWait) * 100));
         const card = document.createElement('div');
-        card.className = `dose-card ${item.wait > 0 ? 'active' : ''}`;
+        card.className = 'dose-card' + (item.wait > 0 ? ' active' : '');
         card.innerHTML = `
           <div>
             <div class="dose-top">
@@ -668,12 +633,10 @@
       });
     }
 
-    // ── GAS에서 대기 현황 불러오기 ────────────────────────────────────
-    // GAS 응답 형식: { success: true, waitData: [{dose:'2.5mg', wait:3}, ...] }
-    // GAS 시트: '재고현황' A1:B5 (헤더: 용량/대기명수, A2:A5 = 2.5mg~10mg, B2:B5 = 숫자)
+    // ── 대기 현황 fetch ────────────────────────────────
     async function fetchWaitStatus() {
       try {
-        const res  = await fetch(`${GAS_URL}?action=getWaitStatus`, { method: 'GET' });
+        const res  = await fetch(GAS_URL + '?action=getWaitStatus');
         const data = await res.json();
         if (data.success && data.waitData) {
           data.waitData.forEach(row => {
@@ -681,123 +644,130 @@
             if (target) target.wait = Number(row.wait) || 0;
           });
           renderDoseGrid();
-          const noteEl = document.getElementById('lastUpdated');
-          noteEl.innerHTML = `<span>🔄</span><span>마지막 업데이트: ${new Date().toLocaleTimeString('ko-KR')}</span>`;
+          document.getElementById('lastUpdated').innerHTML =
+            '<span>🔄</span><span>마지막 업데이트: ' + new Date().toLocaleTimeString('ko-KR') + '</span>';
         }
       } catch(e) {
-        console.warn('대기 현황 불러오기 실패 (오프라인 모드)', e);
-        const noteEl = document.getElementById('lastUpdated');
-        noteEl.innerHTML = `<span>⚠️</span><span>데이터를 불러오지 못했습니다. 잠시 후 자동으로 재시도합니다.</span>`;
+        console.warn('대기 현황 불러오기 실패', e);
+        document.getElementById('lastUpdated').innerHTML =
+          '<span>⚠️</span><span>데이터를 불러오지 못했습니다. 잠시 후 자동으로 재시도합니다.</span>';
       }
     }
 
-    // ── 예약 조회 (이름 + 생년월일 6자리 + 핸드폰 뒷자리 4자리) ──────
-    // GAS 응답 형식: { success: true, results: [{dose:'2.5mg', status:'입고 대기 중', qty:1}, ...] }
-    // GAS 쪽에서는 '예약목록_2.5mg', '예약목록_5.0mg', '예약목록_7.5mg', '예약목록_10mg' 시트를
-    // 모두 순회하며 이름/생년월일/핸드폰뒤4자리 일치하는 행을 반환해야 합니다.
+    // ── 예약 조회 ──────────────────────────────────────
     async function lookupReservation() {
       const name  = document.getElementById('lookupName').value.trim();
       const birth = document.getElementById('lookupBirth').value.trim();
       const phone = document.getElementById('lookupPhone').value.trim();
       const area  = document.getElementById('lookupResultArea');
 
-      // 유효성 검사
       if (!name || !birth || !phone) {
-        area.innerHTML = `
-          <div class="no-result">
-            <p>이름, 생년월일 6자리, 핸드폰 뒷자리 4자리를<br>모두 입력해 주세요.</p>
-          </div>`;
+        area.innerHTML = '<div class="no-result"><p>이름, 생년월일 6자리, 핸드폰 뒷자리 4자리를<br>모두 입력해 주세요.</p></div>';
         return;
       }
       if (!/^\d{6}$/.test(birth)) {
-        area.innerHTML = `
-          <div class="no-result">
-            <p>생년월일은 6자리 숫자로 입력해 주세요.<br>예: 990101</p>
-          </div>`;
+        area.innerHTML = '<div class="no-result"><p>생년월일은 6자리 숫자로 입력해 주세요.<br>예: 990101</p></div>';
         return;
       }
       if (!/^\d{4}$/.test(phone)) {
-        area.innerHTML = `
-          <div class="no-result">
-            <p>핸드폰 뒷자리는 4자리 숫자로 입력해 주세요.<br>예: 1234</p>
-          </div>`;
+        area.innerHTML = '<div class="no-result"><p>핸드폰 뒷자리는 4자리 숫자로 입력해 주세요.<br>예: 1234</p></div>';
         return;
       }
 
-      area.innerHTML = `<div class="no-result"><p>조회 중...</p></div>`;
+      area.innerHTML = '<div class="no-result"><p>조회 중...</p></div>';
 
       try {
-        const url = `${GAS_URL}?action=lookupReservation`
-          + `&name=${encodeURIComponent(name)}`
-          + `&birth=${encodeURIComponent(birth)}`
-          + `&phone=${encodeURIComponent(phone)}`;
-        const res  = await fetch(url, { method: 'GET' });
+        const url = GAS_URL + '?action=lookupReservation'
+          + '&name='  + encodeURIComponent(name)
+          + '&birth=' + encodeURIComponent(birth)
+          + '&phone=' + encodeURIComponent(phone);
+        const res  = await fetch(url);
         const data = await res.json();
 
         if (!data.success || !data.results || data.results.length === 0) {
-          area.innerHTML = `
-            <div class="no-result">
-              <p>입력하신 정보와 일치하는 예약 내역이 없습니다.<br>이름, 생년월일, 핸드폰 뒷자리를 다시 확인해 주세요.</p>
-            </div>`;
+          area.innerHTML = '<div class="no-result"><p>입력하신 정보와 일치하는 예약 내역이 없습니다.<br>이름, 생년월일, 핸드폰 뒷자리를 다시 확인해 주세요.</p></div>';
           return;
         }
 
         renderLookupResult(name, birth, data.results);
       } catch(e) {
-        area.innerHTML = `
-          <div class="no-result">
-            <p>조회 중 오류가 발생했습니다.<br>잠시 후 다시 시도해 주세요.</p>
-          </div>`;
+        area.innerHTML = '<div class="no-result"><p>조회 중 오류가 발생했습니다.<br>잠시 후 다시 시도해 주세요.</p></div>';
         console.error(e);
       }
     }
 
+    // ── 조회 결과 렌더 ─────────────────────────────────
     function renderLookupResult(name, birth, results) {
       const area = document.getElementById('lookupResultArea');
-      const blocks = results.map(r => {
+
+      const blocks = results.map(function(r) {
         const sc = statusClass(r.status);
         const dc = doseColor(r.dose);
+
+        // 몇번째 순서 표시
+        let rankHtml = '';
+        if (r.status === '입고 대기 중') {
+          // rank: 1-based (0 이하면 표시 안 함)
+          const rankNum = (typeof r.rank === 'number' && r.rank >= 1) ? r.rank : null;
+          if (rankNum !== null) {
+            rankHtml = `
+              <div class="booking-rank">
+                <span>🔢</span>
+                <span>대기 순서</span>
+                <span class="booking-rank-num">${rankNum}번째</span>
+              </div>`;
+          }
+        } else if (r.status === '수령 가능') {
+          rankHtml = `<div class="booking-rank"><span>✅</span><span>수령 가능합니다</span></div>`;
+        } else if (r.status === '수령 완료') {
+          rankHtml = `<div class="booking-rank done"><span>📦</span><span>수령이 완료되었습니다</span></div>`;
+        }
+
         return `
           <div class="booking-block">
             <span class="booking-status-badge ${sc}">${r.status}</span>
             <div class="booking-dose" style="color:${dc};">${r.dose}</div>
-            <div class="booking-qty">수량 ${r.qty || 1}개</div>
+            <div class="booking-meta">
+              <span>${r.date || '날짜 미정'}</span>
+              <span class="booking-meta-sep"></span>
+              <span>수량 ${r.qty || 1}개</span>
+            </div>
+            ${rankHtml}
           </div>`;
       }).join('');
 
+      // 생년월일: 점 없이 숫자 그대로 표시
       area.innerHTML = `
         <div class="lookup-result-wrap">
           <div class="lookup-name-row">
             <span class="lookup-name">${name}</span>
-            <span class="lookup-birth">님 (${formatBirth6(birth)})</span>
+            <span class="lookup-birth">님 (${birth})</span>
           </div>
-          <div class="booking-grid">
+          <div class="booking-list">
             ${blocks}
           </div>
         </div>`;
     }
 
-    // ── 이벤트 바인딩 ──────────────────────────────────────────────────
+    // ── 이벤트 ────────────────────────────────────────
     document.getElementById('lookupBtn').addEventListener('click', lookupReservation);
 
-    // Enter 키 지원 (세 필드 모두)
-    ['lookupName', 'lookupBirth', 'lookupPhone'].forEach(id => {
-      document.getElementById(id).addEventListener('keydown', e => {
+    ['lookupName', 'lookupBirth', 'lookupPhone'].forEach(function(id) {
+      document.getElementById(id).addEventListener('keydown', function(e) {
         if (e.key === 'Enter') lookupReservation();
       });
     });
 
-    // 숫자 입력 필드 — 숫자 외 자동 제거
-    ['lookupBirth', 'lookupPhone'].forEach(id => {
+    ['lookupBirth', 'lookupPhone'].forEach(function(id) {
       document.getElementById(id).addEventListener('input', function() {
         this.value = this.value.replace(/\D/g, '');
       });
     });
 
-    // ── 초기 실행 ─────────────────────────────────────────────────────
+    // ── 초기 실행 ─────────────────────────────────────
     renderDoseGrid();
     fetchWaitStatus();
-    setInterval(fetchWaitStatus, 60000); // 1분마다 자동 갱신
+    setInterval(fetchWaitStatus, 60000);
   </script>
 </body>
 </html>
